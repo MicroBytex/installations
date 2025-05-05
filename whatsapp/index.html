@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MicroByte | WhatsApp Info</title>
+  <link rel="icon" href="https://microbytex.neocities.org/MicroByte.png"/>
+    <style>
+        /* Reset y estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #0a0a0a;
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
+            perspective: 1000px;
+        }
+
+        /* Contenedor principal */
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 1;
+        }
+
+        /* Título */
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #00ff88, #0088ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+            animation: glow 2s infinite alternate;
+        }
+
+        /* Subtítulo */
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+            color: #aaa;
+            font-weight: 300;
+        }
+
+        /* Botón de descarga */
+        .download-btn {
+            position: relative;
+            padding: 1.5rem 3rem;
+            background: linear-gradient(45deg, #00ff88, #0088ff);
+            color: #111;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.5);
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-5px) rotateX(10deg);
+            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.7);
+        }
+
+        .download-btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .download-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Efectos 3D y partículas */
+        .particle {
+            position: absolute;
+            background: rgba(0, 255, 136, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .cube {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            transform-style: preserve-3d;
+            animation: rotate 20s infinite linear;
+            opacity: 0.1;
+        }
+
+        .face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            background: rgba(0, 255, 136, 0.05);
+        }
+
+        .face-front { transform: translateZ(50px); }
+        .face-back { transform: rotateY(180deg) translateZ(50px); }
+        .face-right { transform: rotateY(90deg) translateZ(50px); }
+        .face-left { transform: rotateY(-90deg) translateZ(50px); }
+        .face-top { transform: rotateX(90deg) translateZ(50px); }
+        .face-bottom { transform: rotateX(-90deg) translateZ(50px); }
+
+        /* Animaciones */
+        @keyframes rotate {
+            0% { transform: rotateX(0) rotateY(0) rotateZ(0); }
+            100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 10px rgba(0, 255, 136, 0.3); }
+            100% { text-shadow: 0 0 20px rgba(0, 255, 136, 0.7), 0 0 30px rgba(0, 255, 136, 0.4); }
+        }
+
+        /* Efecto de conexiones */
+        .line {
+            position: absolute;
+            background: linear-gradient(to right, rgba(0, 255, 136, 0.3), rgba(0, 136, 255, 0.3));
+            height: 1px;
+            transform-origin: left center;
+            z-index: -1;
+        }
+
+        /* Efecto de ondas al hacer clic */
+        .wave {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(0, 255, 136, 0.2);
+            transform: scale(0);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Efecto de neón alrededor del contenedor */
+        .neon-border {
+            position: absolute;
+            width: 90%;
+            height: 90%;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+            animation: border-pulse 3s infinite alternate;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes border-pulse {
+            0% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.2); }
+            100% { box-shadow: 0 0 40px rgba(0, 255, 136, 0.5), 0 0 60px rgba(0, 255, 136, 0.3); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MicroByte</h1>
+        <h2>WhatsApp Info</h2>
+        <button class="download-btn" id="downloadBtn">Descargar</button>
+        <div class="neon-border"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.querySelector('.container');
+            const downloadBtn = document.getElementById('downloadBtn');
+            
+            // Crear partículas flotantes
+            for (let i = 0; i < 50; i++) {
+                createParticle();
+            }
+            
+            // Crear cubos 3D
+            for (let i = 0; i < 5; i++) {
+                createCube();
+            }
+            
+            // Crear conexiones entre partículas
+            createConnections();
+            
+            // Efecto al hacer clic en el botón
+            downloadBtn.addEventListener('click', function() {
+                // Efecto de ondas
+                createWave(this);
+                
+                // Redirigir después de un breve retraso para que se vea la animación
+                setTimeout(() => {
+                    window.location.href = 'http://3uploaderfiles.kesug.com/uploads/68190247505d2_MicroByte_-_WhatsApp_Info.docx';
+                }, 500);
+            });
+            
+            // Efecto de movimiento 3D con el mouse
+            document.addEventListener('mousemove', (e) => {
+                const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+                const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+                container.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+            });
+            
+            // Resetear la posición cuando el mouse sale
+            document.addEventListener('mouseleave', () => {
+                container.style.transform = 'rotateY(0deg) rotateX(0deg)';
+            });
+            
+            // Función para crear partículas
+            function createParticle() {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                const size = Math.random() * 10 + 5;
+                const posX = Math.random() * window.innerWidth;
+                const posY = Math.random() * window.innerHeight;
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * 5;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}px`;
+                particle.style.top = `${posY}px`;
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
+                particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
+                
+                document.body.appendChild(particle);
+                
+                // Mover partículas aleatoriamente
+                setInterval(() => {
+                    particle.style.left = `${Math.random() * window.innerWidth}px`;
+                    particle.style.top = `${Math.random() * window.innerHeight}px`;
+                }, duration * 1000);
+            }
+            
+            // Función para crear cubos 3D
+            function createCube() {
+                const cube = document.createElement('div');
+                cube.classList.add('cube');
+                
+                const posX = Math.random() * window.innerWidth;
+                const posY = Math.random() * window.innerHeight;
+                const size = Math.random() * 100 + 50;
+                
+                cube.style.width = `${size}px`;
+                cube.style.height = `${size}px`;
+                cube.style.left = `${posX}px`;
+                cube.style.top = `${posY}px`;
+                
+                // Crear caras del cubo
+                const faces = ['front', 'back', 'right', 'left', 'top', 'bottom'];
+                faces.forEach(face => {
+                    const faceElement = document.createElement('div');
+                    faceElement.classList.add('face', `face-${face}`);
+                    cube.appendChild(faceElement);
+                });
+                
+                document.body.appendChild(cube);
+                
+                // Mover cubos aleatoriamente
+                setInterval(() => {
+                    cube.style.left = `${Math.random() * window.innerWidth}px`;
+                    cube.style.top = `${Math.random() * window.innerHeight}px`;
+                }, 20000);
+            }
+            
+            // Función para crear conexiones entre elementos
+            function createConnections() {
+                const particles = document.querySelectorAll('.particle');
+                
+                particles.forEach(particle1 => {
+                    particles.forEach(particle2 => {
+                        if (Math.random() > 0.95) { // Solo conectar algunas partículas
+                            const line = document.createElement('div');
+                            line.classList.add('line');
+                            
+                            const x1 = parseFloat(particle1.style.left) + parseFloat(particle1.style.width) / 2;
+                            const y1 = parseFloat(particle1.style.top) + parseFloat(particle1.style.height) / 2;
+                            const x2 = parseFloat(particle2.style.left) + parseFloat(particle2.style.width) / 2;
+                            const y2 = parseFloat(particle2.style.top) + parseFloat(particle2.style.height) / 2;
+                            
+                            const length = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+                            const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+                            
+                            line.style.width = `${length}px`;
+                            line.style.left = `${x1}px`;
+                            line.style.top = `${y1}px`;
+                            line.style.transform = `rotate(${angle}deg)`;
+                            line.style.opacity = Math.random() * 0.3 + 0.1;
+                            
+                            document.body.appendChild(line);
+                            
+                            // Actualizar posición de la línea
+                            setInterval(() => {
+                                const x1 = parseFloat(particle1.style.left) + parseFloat(particle1.style.width) / 2;
+                                const y1 = parseFloat(particle1.style.top) + parseFloat(particle1.style.height) / 2;
+                                const x2 = parseFloat(particle2.style.left) + parseFloat(particle2.style.width) / 2;
+                                const y2 = parseFloat(particle2.style.top) + parseFloat(particle2.style.height) / 2;
+                                
+                                const length = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+                                const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+                                
+                                line.style.width = `${length}px`;
+                                line.style.left = `${x1}px`;
+                                line.style.top = `${y1}px`;
+                                line.style.transform = `rotate(${angle}deg)`;
+                            }, 100);
+                        }
+                    });
+                });
+            }
+            
+            // Función para crear efecto de onda al hacer clic
+            function createWave(element) {
+                const wave = document.createElement('div');
+                wave.classList.add('wave');
+                
+                const rect = element.getBoundingClientRect();
+                const x = rect.left + rect.width / 2;
+                const y = rect.top + rect.height / 2;
+                
+                wave.style.left = `${x}px`;
+                wave.style.top = `${y}px`;
+                
+                document.body.appendChild(wave);
+                
+                // Animación de la onda
+                let scale = 0;
+                let opacity = 0.5;
+                const animation = setInterval(() => {
+                    scale += 0.05;
+                    opacity -= 0.01;
+                    
+                    wave.style.transform = `scale(${scale})`;
+                    wave.style.opacity = opacity;
+                    wave.style.width = `${rect.width * 2}px`;
+                    wave.style.height = `${rect.height * 2}px`;
+                    
+                    if (opacity <= 0) {
+                        clearInterval(animation);
+                        wave.remove();
+                    }
+                }, 20);
+            }
+        });
+    </script>
+</body>
+</html>
